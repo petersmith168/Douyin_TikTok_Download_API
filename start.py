@@ -34,8 +34,21 @@
 # ==============================================================================
 
 
-from app.main import Host_IP, Host_Port
-import uvicorn
+try:
+    from fastapi import FastAPI  # noqa:F401 - check dependency only
+except ImportError as exc:
+    raise SystemExit(
+        "fastapi is not installed. Please run 'pip install -r requirements.txt'"
+    ) from exc
+
+try:
+    import uvicorn
+except ImportError as exc:
+    raise SystemExit(
+        "uvicorn is not installed. Please run 'pip install -r requirements.txt'"
+    ) from exc
+
+from app.main import Host_IP, Host_Port, app
 
 if __name__ == '__main__':
     uvicorn.run('app.main:app', host=Host_IP, port=Host_Port, reload=True, log_level="info")
