@@ -37,10 +37,8 @@
 import uvicorn
 from fastapi import FastAPI
 from app.api.router import router as api_router
+from app.mcp_service import router as mcp_router
 
-# PyWebIO APP
-from app.web.app import MainView
-from pywebio.platform.fastapi import asgi_app
 
 # OS
 import os
@@ -88,6 +86,10 @@ tags_metadata = [
     {
         "name": "Download",
         "description": "**(下载数据接口/Download data endpoints)**",
+    },
+    {
+        "name": "MCP",
+        "description": "**(MCP 服务接口/MCP service endpoints)**",
     },
 ]
 
@@ -137,11 +139,8 @@ app = FastAPI(
 
 # API router
 app.include_router(api_router, prefix="/api")
+app.include_router(mcp_router, prefix="/api/mcp")
 
-# PyWebIO APP
-if config['Web']['PyWebIO_Enable']:
-    webapp = asgi_app(lambda: MainView().main_view())
-    app.mount("/", webapp)
 
 if __name__ == '__main__':
     uvicorn.run(app, host=Host_IP, port=Host_Port)

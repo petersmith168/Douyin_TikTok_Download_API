@@ -42,7 +42,18 @@ These sponsors have paid to place them here,**Doinan_tics_download_api**The proj
 
 > 🚨If you want to use a private server to run this project, please refer to:[Deployment preparations](./README.md#%EF%B8%8F%E9%83%A8%E7%BD%B2%E5%89%8D%E7%9A%84%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C%E8%AF%B7%E4%BB%94%E7%BB%86%E9%98%85%E8%AF%BB),[Docker deployment](./README.md#%E9%83%A8%E7%BD%B2%E6%96%B9%E5%BC%8F%E4%BA%8C-docker),[One-click deployment](./README.md#%E9%83%A8%E7%BD%B2%E6%96%B9%E5%BC%8F%E4%B8%80-linux)
 
-This project is based on[Pydebio](https://github.com/pywebio/PyWebIO)，[Fasting](https://fastapi.tiangolo.com/)，[HTTPX](https://www.python-httpx.org/), fast asynchronous[Tik Tok](https://www.douyin.com/)/[Tiktok](https://www.tiktok.com/)Data crawling tool, and online batch analysis and downloading of watermark-free videos or picture albums through the web, data crawling API, iOS shortcuts without watermark download and other functions. You can deploy or transform this project yourself to achieve more functions, or you can call it directly in your project[scraper.py](https://github.com/Evil0ctal/Douyin_TikTok_Download_API/blob/Stable/scraper.py)Or install an existing one[pip package](https://pypi.org/project/douyin-tiktok-scraper/)As a parsing library, easy to crawl data, etc....
+Built with [FastAPI](https://fastapi.tiangolo.com/) and [HTTPX](https://www.python-httpx.org/), this project offers an asynchronous API service for crawling Douyin/TikTok data. It supports batch parsing and watermark-free downloads. You can deploy it yourself or directly call [scraper.py](https://github.com/Evil0ctal/Douyin_TikTok_Download_API/blob/Stable/scraper.py) or use the [pip package](https://pypi.org/project/douyin-tiktok-scraper/) to fetch data easily.
+
+### Quick Start
+
+```bash
+git clone https://github.com/Evil0ctal/Douyin_TikTok_Download_API.git
+cd Douyin_TikTok_Download_API
+pip install -r requirements.txt
+python3 start.py
+```
+
+Once running, open `http://localhost:80/docs` in your browser or retrieve the OpenAPI schema via `curl http://localhost:80/api/mcp/schema`.
 
 _Some simple application scenarios:_
 
@@ -89,7 +100,6 @@ Some of the source code of TikHub will be open sourced on Github and will sponso
 
 > 😾The online download function of the demo site has been turned off, and Douyin's parsing and API services cannot be guaranteed for availability on the Demo site due to cookies.
 
-🍔Web APP:<https://douyin.wtf/>
 
 🍟API Document:<https://douyin.wtf/docs>
 
@@ -105,7 +115,6 @@ Some of the source code of TikHub will be open sourced on Github and will sponso
 
 ## ⚗️Technology Stack
 
--   [/app/web](https://github.com/Evil0ctal/Douyin_TikTok_Download_API/blob/main/app/web)-[Pydebio](https://www.pyweb.io/)
 -   [/app/api](https://github.com/Evil0ctal/Douyin_TikTok_Download_API/blob/main/app/api)-[Fasting](https://fastapi.tiangolo.com/)
 -   [/crawlers](https://github.com/Evil0ctal/Douyin_TikTok_Download_API/blob/main/crawlers)-[HTTPX](https://www.python-httpx.org/)
 
@@ -117,9 +126,6 @@ Some of the source code of TikHub will be open sourced on Github and will sponso
 
 -   Obtain the request parameters and use`Crawlers`After processing data, the related classes return in JSON form, download videos, and implement fast calls with iOS shortcuts, and support asynchronous.
 
-> **_/app/web_**
-
--   use`PyWebIO`A simple web program created, process the value entered on the web page and use it`Crawlers`The related class processing interface outputs related data on the web page.
 
 **_Most of the parameters of the above files can be in the corresponding`config.yaml`Make modifications in_**
 
@@ -127,26 +133,20 @@ Some of the source code of TikHub will be open sourced on Github and will sponso
 
     ./Douyin_TikTok_Download_API
     ├─app
-    │  ├─api
-    │  │  ├─endpoints
-    │  │  └─models
-    │  ├─download
-    │  └─web
-    │      └─views
-    └─crawlers
-      ├─bilibili
-      │  └─web  
-      ├─douyin
-      │  └─web
-      ├─hybrid
-      ├─tiktok
-      │  ├─app
-      │  └─web
-      └─utils
+     │  ├─api
+     │  │  ├─endpoints
+     │  │  └─models
+     │  └─download
+     └─crawlers
+       ├─bilibili
+       ├─douyin
+       ├─hybrid
+       ├─tiktok
+       │  └─app
+       └─utils
 
 ## ✨Support functions:
 
--   Batch analysis on the web side (supports Douyin/TikTok hybrid analysis)
 -   Download videos or albums online.
 -   Production[pip package](https://pypi.org/project/douyin-tiktok-scraper/)方便快速导入你的项目
 -   [iOS shortcuts to quickly call API](https://apps.apple.com/cn/app/%E5%BF%AB%E6%8D%B7%E6%8C%87%E4%BB%A4/id915249334)Implement watermark-free videos/pictures in-app download
@@ -458,16 +458,21 @@ This project API:![](https://github.com/Evil0ctal/Douyin_TikTok_Download_API/blo
 
 <details><summary>🔎点击展开截图</summary>
 
-Web main interface:
-
-![](https://github.com/Evil0ctal/Douyin_TikTok_Download_API/blob/main/Screenshots/v3_screenshots/Home.png?raw=true)
-
-Web main interface:
-
-![](https://github.com/Evil0ctal/Douyin_TikTok_Download_API/blob/main/Screenshots/v3_screenshots/Home_en.png?raw=true)
 
 </details>
 <hr>
+
+## MCP Service
+
+This project exposes an endpoint compatible with the **Model Control Protocol (MCP)**.
+After starting the API service you can retrieve the full OpenAPI description via:
+
+```bash
+curl http://localhost:80/api/mcp/schema
+```
+
+The returned JSON schema allows large language models or other clients that
+implement MCP to discover available endpoints and parameters.
 
 ## 📜 Star History
 
