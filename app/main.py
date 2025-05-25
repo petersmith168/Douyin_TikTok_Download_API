@@ -34,13 +34,13 @@
 
 
 # FastAPI APP
-import uvicorn
+try:
+    import uvicorn
+except ImportError:
+    uvicorn = None
 from fastapi import FastAPI
 from app.api.router import router as api_router
 
-# PyWebIO APP
-from app.web.app import MainView
-from pywebio.platform.fastapi import asgi_app
 
 # OS
 import os
@@ -138,10 +138,10 @@ app = FastAPI(
 # API router
 app.include_router(api_router, prefix="/api")
 
-# PyWebIO APP
-if config['Web']['PyWebIO_Enable']:
-    webapp = asgi_app(lambda: MainView().main_view())
-    app.mount("/", webapp)
 
 if __name__ == '__main__':
+    if uvicorn is None:
+        raise SystemExit(
+            "uvicorn is not installed. Please run 'pip install -r requirements.txt'"
+        )
     uvicorn.run(app, host=Host_IP, port=Host_Port)
